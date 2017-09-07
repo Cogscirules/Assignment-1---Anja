@@ -244,14 +244,16 @@ List all kids who:
 ```{r}
 library(dplyr)
 
-MLU_0 = filter_if()
+#Make a new datafram where you group by subjects and then summarize the function, the child MLU using mean. 
+
+MLU_001= group_by(data02, subj_id) %>%
+  summarise_each(funs(mean(., na.rm = TRUE)), CHI_MLU)
+
+#View results - print this
+filter(MLU_001, CHI_MLU > 2.7)
 
 
-MLU_0000 = select(data02, subj_id, visit)
-
-MLU_01 = filter(data02, CHI_MLU > 2.7)
-
-#Figuring out whcih children had a MLU under 1.5 in the first visit.
+#Figuring out which children had a MLU under 1.5 in the first visit.
 
 MLU_02 = filter(data02, data02$CHI_MLU>1.5 & data02$visit == 1)
 
@@ -271,9 +273,14 @@ USING ARRANGE
 
 ```{r}
 
-?arrange 
+#This function will, using a pipe, arrange the new dataframe from the lowest to the highest amount of words uttered in the 6th visit.  The answer is subject number 55.
 
-MW_6 = arrange(data02, data02$tokens_CHI> data02$visit == 6)
+#mw_06 = group_by(data02, visit == 6) %>% arrange(tokens_CHI)
+
+if data02$visit == 6 {
+  arrange(data02$tokens_CHI)
+}
+
 
 ```
 
@@ -283,6 +290,10 @@ USING SELECT
 2. What happens if you include the name of a variable multiple times in a select() call?
 
 ```{r}
+
+ASD_01 = subset(data02, Diagnosis = "ASD", CHI_MLU, tokens_CHI)
+data01 = subset(final_df, select = -c(ADOS, MullenRaw, ExpressiveLangRaw))
+
 
 ```
 
