@@ -206,6 +206,17 @@ Tip: Google "how to rename levels in R".
 
 data02$subj_id = as.numeric(as.factor(data02$subj_id))
 
+
+#Renaming Gender --> 1 = Female, 2 = Male
+
+data02$Gender = revalue(as.factor(data02$Gender), c("1"="F", "2" = "M"))
+
+
+#Renaming Diagnosis --> A = ASD (autism spectrum disorder), B = TD (typically develop)
+
+data02$Diagnosis = revalue(as.factor(data02$Diagnosis), c("A" = "ASD", "B" = "TD"))
+
+
 ```
 
 
@@ -231,7 +242,24 @@ List all kids who:
 3. have not completed all trials. Tip: Use pipes to solve this
 
 ```{r}
+library(dplyr)
 
+MLU_0 = filter_if()
+
+
+MLU_0000 = select(data02, subj_id, visit)
+
+MLU_01 = filter(data02, CHI_MLU > 2.7)
+
+#Figuring out whcih children had a MLU under 1.5 in the first visit.
+
+MLU_02 = filter(data02, data02$CHI_MLU>1.5 & data02$visit == 1)
+
+#Viewing the result
+MLU_02$subj_id
+
+#
+?pipe
 
 ```
 
@@ -243,6 +271,9 @@ USING ARRANGE
 
 ```{r}
 
+?arrange 
+
+MW_6 = arrange(data02, data02$tokens_CHI> data02$visit == 6)
 
 ```
 
