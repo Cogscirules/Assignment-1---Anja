@@ -179,12 +179,13 @@ Tip: the final dataset should have as many rows as the the old one.
 #Take the value for each first visit and repeat it for the rest of the visits for each participant
 
 
-#Takes the old dataframe and makes a new one where it only includes 1st visit
-df2 = subset(final_df, visit == 1)
+#Takes the old dataframe and makes a new one where it only includes 1st visit (takes row 1, 7 to 9 and makes it into a dataframe, merging them together with the old one at the end)
 
-data01 = merge(df2, final_df)
+df2 = subset(final_df[,c(1,7:9)], final_df$visit == "1")
 
-jj
+data01 = subset(final_df, select = -c(ADOS, MullenRaw, ExpressiveLangRaw))
+
+data02 = merge(df2, data01, all = T)
 
 
 ```
@@ -201,6 +202,9 @@ Tip: Google "how to rename levels in R".
 
 ```{r}
 
+#Convert the ID into a factor, which will be conveted into numbers
+
+data02$subj_id = as.numeric(as.factor(data02$subj_id))
 
 ```
 
@@ -208,6 +212,9 @@ Tip: Google "how to rename levels in R".
 Save the data set using into a csv file. Hint: look into write.csv()
 
 ```{r}
+
+write.csv("C:/Users/Bruger/Desktop/Programming/Semester 3/asm. 1/Assignment-1---Anja")
+
 
 ```
 
