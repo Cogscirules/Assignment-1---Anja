@@ -287,7 +287,7 @@ data02$visit = as.numeric(data02$visit)
 mw_06 = arrange(data02, desc(visit), desc(tokens_CHI)) 
 
 #Answer = subj_id 57
-mw_01 = arrange(data02, visit, desc(tokens_CHI)
+mw_01 = arrange(data02, visit, desc(tokens_CHI))
 
 
 ```
@@ -299,8 +299,12 @@ USING SELECT
 
 ```{r}
 
-ASD_01 = subset(data02, Diagnosis = "ASD", CHI_MLU, tokens_CHI)
-data01 = subset(final_df, select = -c(ADOS, MullenRaw, ExpressiveLangRaw))
+
+
+SEL_001 = select(data02, contains(Diagnosis =="ASD"), CHI_MLU, tokens_CHI)
+
+ASD_01= subset(select(data02, Diagnosis = "ASD", CHI_MLU, tokens_CHI))
+
 
 
 ```
