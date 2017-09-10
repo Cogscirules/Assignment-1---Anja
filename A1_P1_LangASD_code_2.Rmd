@@ -260,8 +260,13 @@ MLU_02 = filter(data02, data02$CHI_MLU>1.5 & data02$visit == 1)
 #Viewing the result
 MLU_02$subj_id
 
-#
-?pipe
+#gruppere dit datasæt efter Child.ID, hvorefter du kan bruge funktionen summarise sammen med n(), for at ende ud med et data sæt som indeholder en række pr. barn med en tilhørende værdi (svarende til antal besøg).Herefter kan du bruge filter på dit nye datasæt, til at filtrere alle de børn fra som ikke har en værdi af 6 
+
+
+MLU_03 = group_by(data02, subj_id) %>%
+  summarize(data02, n(data02$visit))
+
+MLU_03
 
 ```
 
@@ -273,13 +278,16 @@ USING ARRANGE
 
 ```{r}
 
-#This function will, using a pipe, arrange the new dataframe from the lowest to the highest amount of words uttered in the 6th visit.  The answer is subject number 55.
+#This function will, using a pipe, arrange the new dataframe from the lowest to the highest amount of words uttered in the 6th visit.
 
-#mw_06 = group_by(data02, visit == 6) %>% arrange(tokens_CHI)
 
-if data02$visit == 6 {
-  arrange(data02$tokens_CHI)
-}
+#desc() decending order. Answer = subj_id 55
+
+data02$visit = as.numeric(data02$visit)
+mw_06 = arrange(data02, desc(visit), desc(tokens_CHI)) 
+
+#Answer = subj_id 57
+mw_01 = arrange(data02, visit, desc(tokens_CHI)
 
 
 ```
