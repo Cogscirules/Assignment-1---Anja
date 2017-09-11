@@ -262,11 +262,19 @@ MLU_02$subj_id
 
 #gruppere dit datasæt efter Child.ID, hvorefter du kan bruge funktionen summarise sammen med n(), for at ende ud med et data sæt som indeholder en række pr. barn med en tilhørende værdi (svarende til antal besøg).Herefter kan du bruge filter på dit nye datasæt, til at filtrere alle de børn fra som ikke har en værdi af 6 
 
+data03 = data02 %>%
+  group_by(as.factor(subj_id)) %>%
+  summarise(visit = n())
 
-MLU_03 = group_by(data02, subj_id) %>%
-  summarize(data02, n(data02$visit))
+#I cannot get this part to work properly
 
-MLU_03
+filtdata03 = nrow(filter(data03, visit == 6))
+
+View(filtdata03)
+
+
+
+
 
 ```
 
@@ -300,10 +308,15 @@ USING SELECT
 ```{r}
 
 
+#I wanted to make a dataframe with the variables I needed and filter out the TD diagnosis, but I couldn't get it to work.
 
-SEL_001 = select(data02, contains(Diagnosis =="ASD"), CHI_MLU, tokens_CHI)
+SEL_01 = select(data02, contains(data02$Diagnosis =="ASD"), CHI_MLU, tokens_CHI, subj_id)
 
-ASD_01= subset(select(data02, Diagnosis = "ASD", CHI_MLU, tokens_CHI))
+#Making a dataframe with all variables I need
+SEL_001 = select(data02, Diagnosis, CHI_MLU, tokens_CHI, subj_id)
+
+#Filtering so I only have the children with diagnosis ASD
+SEL_002 = filter(SEL_001, data02$Diagnosis == "ASD")
 
 
 
