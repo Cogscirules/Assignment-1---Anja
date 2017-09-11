@@ -348,6 +348,13 @@ data02 %>%
 data04 = mutate(data02, subj_id, mt_02)
 
 
+#2 - isn't it the same as the one above? At least my results are, so something is off. 
+
+mt_03 = mean(data02$tokens_CHI)
+
+data05 = data04 %>%
+  group_by(as.factor(subj_id)) %>%
+  summarise(mt_03)
 
 
 
