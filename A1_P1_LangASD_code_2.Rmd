@@ -329,6 +329,31 @@ USING MUTATE, SUMMARISE and PIPES
 3. The solution to task above enables us to assess the average amount of words produced by each child. Why don't we just use these average values to describe the language production of the children? What is the advantage of keeping all the data?
 
 ```{r}
+library(dplyr)
+
+#1
+
+#Mean of words during visit 1 across children
+
+mt_02 = if (data02$visit == 1) {
+  mean(data02$tokens_CHI)
+  }
+
+#Grouping by subjects and then summarizing the mt
+data02 %>%
+  group_by(as.factor(subj_id)) %>%
+  summarise(mt_02)
+
+#Mutating dataframe - adding the mt
+data04 = mutate(data02, subj_id, mt_02)
+
+
+
+
+
+
+
+
 
 
 ```
